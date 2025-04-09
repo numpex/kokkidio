@@ -18,25 +18,24 @@ spack:
           flags: {}
           environment: {}
           extra_rpaths: []
-      - spec: llvm@18.1.8+clang~lld~lldb
-        prefix: /data/cemosis/spack/opt/spack/linux-ubuntu22.04-zen2/gcc-14.1.0/llvm-18.1.8-rob3cksxufmzo7owa3gkhphkyyhqlc2w
+      - spec: llvm@18.0.0+clang~lld~lldb
+        prefix: /usr
         extra_attributes:
           compilers:
-            c: /data/cemosis/spack/opt/spack/linux-ubuntu22.04-zen2/gcc-14.1.0/llvm-18.1.8-rob3cksxufmzo7owa3gkhphkyyhqlc2w/bin/clang
-            cxx: /data/cemosis/spack/opt/spack/linux-ubuntu22.04-zen2/gcc-14.1.0/llvm-18.1.8-rob3cksxufmzo7owa3gkhphkyyhqlc2w/bin/clang++
-            fortran: /data/cemosis/spack/opt/spack/linux-ubuntu22.04-zen2/gcc-12.3.0/gcc-14.1.0-mosvjcfacfem6zb4lvnodoxqajraggii/bin/gfortran
+            c: /usr/bin/clang-18
+            cxx: /usr/bin/clang++-18
           flags: {}
           environment: {}
-          extra_rpaths: []
+          extra_rpaths: []          
     gcc:
       externals:
-      - spec: gcc@14.1.0 languages:='c,c++,fortran'
-        prefix: /data/cemosis/spack/opt/spack/linux-ubuntu22.04-zen2/gcc-12.3.0/gcc-14.1.0-mosvjcfacfem6zb4lvnodoxqajraggii
+      - spec: gcc@14.0.0 languages:='c,c++,fortran'
+        prefix: /usr
         extra_attributes:
           compilers:
-            c: /data/cemosis/spack/opt/spack/linux-ubuntu22.04-zen2/gcc-12.3.0/gcc-14.1.0-mosvjcfacfem6zb4lvnodoxqajraggii/bin/gcc
-            cxx: /data/cemosis/spack/opt/spack/linux-ubuntu22.04-zen2/gcc-12.3.0/gcc-14.1.0-mosvjcfacfem6zb4lvnodoxqajraggii/bin/g++
-            fortran: /data/cemosis/spack/opt/spack/linux-ubuntu22.04-zen2/gcc-12.3.0/gcc-14.1.0-mosvjcfacfem6zb4lvnodoxqajraggii/bin/gfortran
+            c: /usr/bin/gcc-14
+            cxx: /usr/bin/g++-14
+            fortran: /usr/bin/gfortran-14
           flags: {}
           environment: {}
           extra_rpaths: []
