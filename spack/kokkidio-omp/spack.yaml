@@ -41,10 +41,10 @@ spack:
           environment: {}
           extra_rpaths: []
     all:
-      compiler: ['gcc@14:', clang@14:18]
-      require: [target=x86_64_v3]
+      compiler: ['gcc@14:', 'clang@14:18']
+      require: ['target=x86_64_v3']
     mpi:
-      require: [openmpi@:4 fabrics=auto]
+      require: ['openmpi@:4 fabrics=auto']
   definitions:
   - compilers: ['gcc@14:']
   - packages: [kokkos+openmp, eigen,cmake]
