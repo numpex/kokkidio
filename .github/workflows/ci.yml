@@ -34,7 +34,7 @@ jobs:
     - name: Install
       run: |
         ls -l
-        spack -e spack/kokkidio-${{ matrix.env_variant }} install --no-check-signature --use-buildcache
+        spack -e spack/kokkidio-${{ matrix.env_variant }} install --no-check-signature --use-buildcache auto
 
     - name: Push packages and update index
       run: |
