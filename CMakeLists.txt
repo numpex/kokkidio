@@ -11,10 +11,18 @@ set(CMAKE_CXX_STANDARD_REQUIRED ON)
 list(APPEND CMAKE_MODULE_PATH "${CMAKE_SOURCE_DIR}/cmake/")
 
 set(PROJ_CONF_DIR "${CMAKE_SOURCE_DIR}/cmake")
-include("${PROJ_CONF_DIR}/include_conf.cmake")
+include(${PROJ_CONF_DIR}/include_conf.cmake)
 enable_language(CXX)
 include_conf(checkVar)
 include_conf(checkKokkos)
 include_conf(checkEigen)
 include_conf(sharedOpts)
+include_conf(configureTarget)
 include_conf(install)
+
+
+
+
+add_subdirectory(src/examples)
+enable_testing()
+add_subdirectory(src/tests)
