@@ -34,7 +34,7 @@ jobs:
     - name: Install
       run: |
         ls -l
-        spack -e spack/kokkidio-${{ matrix.env_variant }} install --no-check-signature
+        spack -e spack/kokkidio-${{ matrix.env_variant }} install --no-check-signature --use-buildcache
 
     - name: Push packages and update index
       run: |
@@ -67,7 +67,7 @@ jobs:
         path: _spack
 
     - name: Spack Install
-      run: spack -e spack/kokkidio-${{ matrix.env_variant }} install --no-check-signature
+      run: spack -e spack/kokkidio-${{ matrix.env_variant }} install --no-check-signature --use-buildcache
 
     - name: Configure CMake
       shell: spack-bash {0}
