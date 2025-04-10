@@ -25,7 +25,7 @@ jobs:
     outputs:
       runner: ${{ steps.check.outputs.runner }}
     env: 
-      GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      GH_TOKEN: ${{ secrets.TOKEN_RUNNER }}
     steps:
       - name: Check for self-ubuntu-24.04 runner at repository level
         id: check
