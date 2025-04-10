@@ -42,8 +42,13 @@ jobs:
           else
              echo "runner=ubuntu-24.04" >> "$GITHUB_OUTPUT"
           fi
+          echo "runner=$runner"
+          echo "self=$self"
+          echo "runners=$runners"
+          echo "chosen-runner=${{ github.event.inputs.chosen-runner }}"
 
   build-cache:
+    if: 0
     needs: check-runner
     runs-on: ${{ needs.check-runner.outputs.runner }}
     permissions:
