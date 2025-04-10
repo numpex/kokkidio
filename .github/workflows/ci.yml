@@ -42,7 +42,7 @@ jobs:
           else
              echo "runner=ubuntu-24.04" >> "$GITHUB_OUTPUT"
           fi
-          ech "event: x${{ github.event.inputs.chosen-runner }}x"
+          echo "event: x${{ github.event.inputs.chosen-runner }}x"
           echo "runner=$runner"
           echo "self=$self"
           echo "runners=$runners"
