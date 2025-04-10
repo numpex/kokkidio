@@ -11,7 +11,7 @@ on:
 
 jobs:
   build-cache:
-    runs-on: ubuntu-24.04
+    runs-on: self-ubuntu-24.04
     permissions:
       packages: write
     continue-on-error: false
@@ -44,14 +44,14 @@ jobs:
 
   build:
     needs: build-cache
-    runs-on: ubuntu-24.04
+    runs-on: self-ubuntu-24.04
     permissions:
       packages: write
     continue-on-error: true
     strategy:
       matrix:
         env_variant: [omp]
-        preset: [default, kokkos]
+        preset: [default]
 
     steps:
     - name: Checkout repository
