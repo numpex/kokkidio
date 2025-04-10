@@ -29,10 +29,9 @@ jobs:
       - name: Check for self-ubuntu-24.04 runner at repository level
         id: check
         run: |
-          # Query the repo-level runners for the desired label
+          gh --version
           RUNNERS_COUNT=$(gh api repos/${{ github.repository_owner }}/actions/runners --jq '.runners | map(select(.labels[].name=="self-ubuntu-24.04")) | length')
           echo "Found ${RUNNERS_COUNT} self-ubuntu-24.04 runner(s)"
-          # Decide: if at least one runner found then mark true, else false
           if [ "$RUNNERS_COUNT" -gt 0 ]; then
             echo "runner_available=true" >> $GITHUB_OUTPUT
           else
