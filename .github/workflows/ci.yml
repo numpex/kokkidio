@@ -30,14 +30,16 @@ jobs:
       - name: Check for self-ubuntu-24.04 runner at repository level
         id: check
         run: |
+          runner="ubuntu-24.04"
           runners=$(gh api -H "Accept: application/vnd.github+json" -H "X-GitHub-Api-Version: 2022-11-28" /orgs/${{ github.repository_owner }}/actions/runners)
           self=$(echo "$runners" | jq --arg label "self-ubuntu-24.04" '[.runners[] | any(.labels[]; .name == $label) and .status == "online"] | any')
           if [ "$self" = "true" ]; then
              # Check chosen-runner using two separate tests
              if [ "${{ github.event.inputs.chosen-runner }}" = "" ] || [ "${{ github.event.inputs.chosen-runner }}" = "self-ubuntu-24.04" ] || [ "${{ github.event.inputs.chosen-runner }}" = "none" ]; then
-                 echo "runner=self-ubuntu-24.04" >> "$GITHUB_OUTPUT"
+                runner="self-ubuntu-24.04"
+                echo "runner=self-ubuntu-24.04" >> "$GITHUB_OUTPUT"
              else
-                 echo "runner=ubuntu-24.04" >> "$GITHUB_OUTPUT"
+                echo "runner=ubuntu-24.04" >> "$GITHUB_OUTPUT"
              fi
           else
              echo "runner=ubuntu-24.04" >> "$GITHUB_OUTPUT"
@@ -47,9 +49,11 @@ jobs:
           echo "self=$self"
           echo "runners=$runners"
           echo "chosen-runner=${{ inputs.chosen-runner }}"
+      - name: Print runner
+        run: |
+          echo "Runner: ${{ steps.check.outputs.runner }}"
 
   build-cache:
-    if: 0
     needs: check-runner
     runs-on: ${{ needs.check-runner.outputs.runner }}
     permissions:
