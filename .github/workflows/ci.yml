@@ -23,6 +23,8 @@ jobs:
     runs-on: ubuntu-latest
     outputs:
       runner-available: ${{ steps.check.outputs.runner_available }}
+    env: 
+      GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
     steps:
       - name: Check for self-ubuntu-24.04 runner at repository level
         id: check
