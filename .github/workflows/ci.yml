@@ -10,7 +10,8 @@ on:
         options:
         - self-ubuntu-24.04
         - ubuntu-24.04
-        default: self-ubuntu-24.04
+        - none
+        default: none
   push:
     branches:
       - main
@@ -20,26 +21,31 @@ on:
 
 jobs:
   check-runner:
-    runs-on: ubuntu-24.04
+    runs-on: ubuntu-latest
     outputs:
-      runner-available: ${{ steps.check.outputs.runner_available }}
+      runner: ${{ steps.check.outputs.runner }}
     env: 
       GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
     steps:
       - name: Check for self-ubuntu-24.04 runner at repository level
         id: check
         run: |
-          gh --version
-          RUNNERS_COUNT=$(gh api repos/${{ github.repository_owner }}/actions/runners --jq '.runners | map(select(.labels[].name=="self-ubuntu-24.04")) | length')
-          echo "Found ${RUNNERS_COUNT} self-ubuntu-24.04 runner(s)"
-          if [ "$RUNNERS_COUNT" -gt 0 ]; then
-            echo "runner_available=true" >> $GITHUB_OUTPUT
+          runners=$(gh api -H "Accept: application/vnd.github+json" -H "X-GitHub-Api-Version: 2022-11-28" /orgs/${{ github.repository_owner }}/actions/runners)
+          self=$(echo $runners | jq --arg label "self-ubuntu-24.04" '[.runners[] | any(.labels[]; .name == $label) and .status == "online"] | any')
+          if [ "$self" = "true" ]; then
+             # check chosen-runner
+              if [ "${{ github.event.inputs.chosen-runner }}" = "self-ubuntu-24.04" || "${{ github.event.inputs.chosen-runner }}" = "none" ]; then
+                  echo "runner=self-ubuntu-24.04" >> "$GITHUB_OUTPUT"
+              else
+                  echo "runner=ubuntu-24.04" >> "$GITHUB_OUTPUT"
+              fi
           else
-            echo "runner_available=false" >> $GITHUB_OUTPUT
+              echo "runner=ubuntu-24.04" >> "$GITHUB_OUTPUT"
           fi
+
   build-cache:
-    if: 0
-    runs-on: self-ubuntu-24.04
+    needs: check-runner
+    runs-on: ${{ needs.check-runner.outputs.runner }}
     permissions:
       packages: write
     continue-on-error: false
@@ -71,8 +77,8 @@ jobs:
       if: ${{ !cancelled() }}
 
   build:
-    needs: build-cache
-    runs-on: ${{ github.event.inputs.chosen-runner || 'ubuntu-24.04' }}
+    needs: [check-runner,build-cache]
+    runs-on: ${{ needs.check-runner.outputs.runner }}
     permissions:
       packages: write
     continue-on-error: true
