@@ -20,9 +20,14 @@ include_conf(sharedOpts)
 include_conf(configureTarget)
 include_conf(install)
 
+option(KOKKIDIO_ENABLE_TESTS "Enable tests" ON)
+option(KOKKIDIO_ENABLE_EXAMPLES "Enable examples" ON)
 
-
-
-add_subdirectory(src/examples)
 enable_testing()
-add_subdirectory(src/tests)
+if (KOKKIDIO_ENABLE_EXAMPLES)
+    add_subdirectory(src/examples)
+endif()
+if (KOKKIDIO_ENABLE_TESTS)
+    add_subdirectory(src/tests)
+endif()
+
