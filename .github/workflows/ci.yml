@@ -2,6 +2,15 @@ name: CI
 
 on:
   workflow_dispatch:
+    inputs:
+      chosen-runner:
+        description: 'Choose the runner to use for the workflow'
+        required: true
+        type: choice
+        options:
+        - self-ubuntu-24.04
+        - ubuntu-24.04
+        default: self-ubuntu-24.04
   push:
     branches:
       - main
@@ -10,7 +19,25 @@ on:
       - main
 
 jobs:
+  check-runner:
+    runs-on: ubuntu-latest
+    outputs:
+      runner-available: ${{ steps.check.outputs.runner_available }}
+    steps:
+      - name: Check for self-ubuntu-24.04 runner at repository level
+        id: check
+        run: |
+          # Query the repo-level runners for the desired label
+          RUNNERS_COUNT=$(gh api repos/${{ github.repository_owner }}/actions/runners --jq '.runners | map(select(.labels[].name=="self-ubuntu-24.04")) | length')
+          echo "Found ${RUNNERS_COUNT} self-ubuntu-24.04 runner(s)"
+          # Decide: if at least one runner found then mark true, else false
+          if [ "$RUNNERS_COUNT" -gt 0 ]; then
+            echo "runner_available=true" >> $GITHUB_OUTPUT
+          else
+            echo "runner_available=false" >> $GITHUB_OUTPUT
+          fi
   build-cache:
+    if: 0
     runs-on: self-ubuntu-24.04
     permissions:
       packages: write
@@ -44,7 +71,7 @@ jobs:
 
   build:
     needs: build-cache
-    runs-on: [self-ubuntu-24.04, ubuntu-24.04]
+    runs-on: ${{ github.event.inputs.chosen-runner || 'ubuntu-24.04' }}
     permissions:
       packages: write
     continue-on-error: true
