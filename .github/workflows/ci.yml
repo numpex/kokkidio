@@ -31,16 +31,16 @@ jobs:
         id: check
         run: |
           runners=$(gh api -H "Accept: application/vnd.github+json" -H "X-GitHub-Api-Version: 2022-11-28" /orgs/${{ github.repository_owner }}/actions/runners)
-          self=$(echo $runners | jq --arg label "self-ubuntu-24.04" '[.runners[] | any(.labels[]; .name == $label) and .status == "online"] | any')
+          self=$(echo "$runners" | jq --arg label "self-ubuntu-24.04" '[.runners[] | any(.labels[]; .name == $label) and .status == "online"] | any')
           if [ "$self" = "true" ]; then
-             # check chosen-runner
-              if [ "${{ github.event.inputs.chosen-runner }}" = "self-ubuntu-24.04" || "${{ github.event.inputs.chosen-runner }}" = "none" ]; then
-                  echo "runner=self-ubuntu-24.04" >> "$GITHUB_OUTPUT"
-              else
-                  echo "runner=ubuntu-24.04" >> "$GITHUB_OUTPUT"
-              fi
+             # Check chosen-runner using two separate tests
+             if [ "${{ github.event.inputs.chosen-runner }}" = "self-ubuntu-24.04" ] || [ "${{ github.event.inputs.chosen-runner }}" = "none" ]; then
+                 echo "runner=self-ubuntu-24.04" >> "$GITHUB_OUTPUT"
+             else
+                 echo "runner=ubuntu-24.04" >> "$GITHUB_OUTPUT"
+             fi
           else
-              echo "runner=ubuntu-24.04" >> "$GITHUB_OUTPUT"
+             echo "runner=ubuntu-24.04" >> "$GITHUB_OUTPUT"
           fi
 
   build-cache:
