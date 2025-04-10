@@ -20,7 +20,7 @@ on:
 
 jobs:
   check-runner:
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-24.04
     outputs:
       runner-available: ${{ steps.check.outputs.runner_available }}
     env: 
