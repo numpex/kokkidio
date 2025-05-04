@@ -6,7 +6,6 @@
         "patch": 0
     },
     "configurePresets": [
-
         {
             "name": "default",
             "displayName": "Default Config",
@@ -49,6 +48,15 @@
             "cacheVariables": {
                 "CMAKE_CXX_STANDARD": "17"
             }
+        },
+        {
+            "name": "rocm",
+            "hidden": true,
+            "cacheVariables": {
+                "CMAKE_CXX_COMPILER": "amdclang++",
+                "CMAKE_C_COMPILER": "amdclang",
+                "DEVICE": "rocm"
+            }
         }
     ],
     "buildPresets": [
@@ -56,12 +64,33 @@
             "name": "default",
             "configurePreset": "default",
             "jobs": 10
+        },
+        {
+            "name": "rocm",
+            "configurePreset": "rocm",
+            "jobs": 10
         }
+
     ],
     "testPresets": [
         {
             "name": "default",
             "configurePreset": "default",
+
+            "output": {
+                "outputOnFailure": true
+            },
+            "execution": {
+                "noTestsAction": "ignore",
+                "stopOnFailure": true
+            },
+            "environment": {
+                "OMP_PROC_BIND": "true"
+            }
+        },
+        {
+            "name": "rocm",
+            "configurePreset": "rocm",
 
             "output": {
                 "outputOnFailure": true

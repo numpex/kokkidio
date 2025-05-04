@@ -26,10 +26,10 @@ spack:
             cxx: /usr/bin/clang++-18
           flags: {}
           environment: {}
-          extra_rpaths: []          
+          extra_rpaths: []
     gcc:
       externals:
-      - spec: gcc@14.0.0 languages:='c,c++,fortran'
+      - spec: gcc@12.0.0 languages:='c,c++,fortran'
         prefix: /usr
         extra_attributes:
           compilers:
@@ -40,13 +40,12 @@ spack:
           environment: {}
           extra_rpaths: []
     all:
-      compiler: ['gcc@14:', 'clang@14:18']
       require: ['target=x86_64_v3']
     mpi:
       require: ['openmpi@:4 fabrics=auto']
   definitions:
-  - compilers: ['gcc@14:']
-  - packages: [kokkos+openmp, eigen,cmake]
+  - compilers: ['gcc@12:']
+  - packages: [kokkos+openmp, eigen, cmake]
   specs:
   - $compilers
   - matrix:

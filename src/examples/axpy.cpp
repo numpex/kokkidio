@@ -48,7 +48,7 @@ void axpy_eigen(){
 	set(y);
 	set(z);
 
-	/* One could either distribute individual SAXPY operations, 
+	/* One could either distribute individual SAXPY operations,
 	 * as one might do on a GPU */
 	for (int i=0; i<size; ++i){
 		z(i) = a * x(i) + y(i);
