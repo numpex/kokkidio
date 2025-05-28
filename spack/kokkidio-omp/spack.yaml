@@ -29,7 +29,7 @@ spack:
           extra_rpaths: []
     gcc:
       externals:
-      - spec: gcc@12.0.0 languages:='c,c++,fortran'
+      - spec: gcc@14.0.0 languages:='c,c++,fortran'
         prefix: /usr
         extra_attributes:
           compilers:

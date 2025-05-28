@@ -84,3 +84,5 @@ doc/*
 
 spack.lock
 Testing/
+
+kokkidio.code-workspace

@@ -51,7 +51,8 @@
         },
         {
             "name": "rocm",
-            "hidden": true,
+            "description": "Enable ROCM",
+            "binaryDir": "${sourceDir}/build/${presetName}",
             "cacheVariables": {
                 "CMAKE_CXX_COMPILER": "amdclang++",
                 "CMAKE_C_COMPILER": "amdclang",
