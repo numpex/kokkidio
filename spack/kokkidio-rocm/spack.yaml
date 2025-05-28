@@ -37,13 +37,23 @@ spack:
           flags: {}
           environment: {}
           extra_rpaths: []
+      - spec: gcc@11.0.0 languages:='c,c++,fortran'
+        prefix: /usr
+        extra_attributes:
+          compilers:
+            c: /usr/bin/gcc-11
+            cxx: /usr/bin/g++-11
+            fortran: /usr/bin/gfortran-11
+          flags: {}
+          environment: {}
+          extra_rpaths: []
     all:
-      require: ['target=x86_64_v3']
+      require: [target=x86_64_v3]
     mpi:
-      require: ['openmpi@:4 fabrics=auto']
+      require: [openmpi@:4 fabrics=auto]
   definitions:
-  - compilers: ['gcc@14:']
-  - packages: ['kokkos +rocm amdgpu_target=gfx90a', 'eigen +rocm amdgpu_target=gfx90a', cmake]
+  - compilers: ['gcc@11']
+  - packages: [kokkos +rocm amdgpu_target=gfx90a, eigen +rocm amdgpu_target=gfx90a, cmake]
   specs:
   - $compilers
   - matrix:
@@ -54,3 +64,5 @@ spack:
     unify: when_possible
   mirrors:
     numpex-buildcache: oci://ghcr.io/numpex/spack-buildcache
+  repos:
+  - /nvme0/saigre/dev/kokkidio/spack.numpex
