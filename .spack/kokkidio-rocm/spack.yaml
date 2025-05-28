@@ -53,7 +53,7 @@ spack:
       require: [openmpi@:4 fabrics=auto]
   definitions:
   - compilers: ['gcc@11']
-  - packages: [kokkos +rocm amdgpu_target=gfx90a, eigen +rocm amdgpu_target=gfx90a, cmake]
+  - packages: [kokkos +rocm amdgpu_target=gfx90a, eigen +rocm amdgpu_target=gfx90a, cmake, llvm-amdgpu]
   specs:
   - $compilers
   - matrix:
